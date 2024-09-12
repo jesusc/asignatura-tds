@@ -5,4 +5,7 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
 
 ## Transparencias y recursos de cada sesión
 
-* **Sesión 1**: Java/Swing
+- **Sesión 1**: Java/Swing
+  - [Boletín de prácticas](boletines/boletin-swing.md)
+  - [Transparencias de Swing (parte 1)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas-1/Pr%C3%A1ctica%20de%20GUI%20-%20Swing/TDS-Swing-parte-1.pdf)
+  - [Iconos](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas-1/Pr%C3%A1ctica%20de%20GUI%20-%20Swing/recursos%20G1/img.zip)
