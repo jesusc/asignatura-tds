@@ -66,9 +66,10 @@ El siguiente ejemplo muestra cómo crear contenedores y anidarlos unos dentros d
 
 ```
 frame : JFrame
-  + contenedor1 : JPanel
-    + contenedor2 : JPanel
-    + contenedor3 : JPanel
+  + content pane (creado automáticamente por el JFrame)
+    + contenedor1 : JPanel
+      + contenedor2 : JPanel
+      + contenedor3 : JPanel
 ```
 
 En el código se utiliza el *layout* absoluto (establecido con `frame.setLayout(null)`) a modo de ejemplo, pero en general este layout no debe usarse porque los componentes no se redimensionan al cambiar el tamaño de la ventana.
@@ -86,6 +87,7 @@ public class ContenedoresSwing {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // Usar layout absoluto para hacer pruebas (¡no usar en producción!)
         frame.setLayout(null);  
+        // Equivalente a frame.getContentPane().setLayout(null)
 
         // Contenedor 1 (JPanel) - Panel principal
         JPanel contenedor1 = new JPanel();
@@ -141,7 +143,21 @@ A continuación se mencionan tres de los layouts más simples:
 3. **BoxLayout**:
    - Dispone los componentes en una única fila (horizontal) o columna (vertical).
    - Proporciona más control sobre el espacio entre componentes en comparación con el `FlowLayout`.
+   - Respeta los *hints* de layout de los componentes (ver siguiente sección)
 
+### Layout hints de los componentes
+
+En Swing todos los componentes tienen unas propiedades especiales que sirven para dar pistas a los *layout managers* acerca de cómo deben mostrar los componentes. Estas propiedades son *pistas* y no todos los layout managers las respetan, pero es importante probarlas para saber qué layouts respetan qué propiedades y cuál es su efecto.
+
+1. **`preferredSize`**: Define el tamaño recomendado para el componente. Indica al layout manager el tamaño que el componente debería tener bajo condiciones normales.
+
+2. **`minimumSize`**: Establece el tamaño mínimo que el componente debe tener. Es el tamaño más pequeño que el componente puede reducirse.
+
+3. **`maximumSize`**: Define el tamaño máximo que el componente puede tener. Es el tamaño más grande que el componente puede crecer.
+
+4. **`alignment`**: Se refiere a la alineación del componente dentro de su contenedor. Se establece mediante `setAlignmentX(float alignmentX)` y `setAlignmentY(float alignmentY)`. El valor es un float entre 0.0 (izquierda o arriba) y 1.0 (derecha o abajo). El valor de 0.5 indica el centro.
+
+No es trivial determinar qué combinación de valores es adecuada ya que es muy dependiente del *layout manager*. Es recomendable hacer pruebas con el editor de interfaces (WindowBuilder en este caso) y consultar la documentación correspondiente.
 
 ### Contenedores y layout simple
 
@@ -200,6 +216,7 @@ Trata de realizar las siguientes tareas sobre el código anterior.
 
 - [ ] Cambia la alineación del botón y la etiqueta para que se "peguen a la derecha" (pista: pasa una constante como `FlowLayout.????` en el constructor).
 - [ ] Añade un panel a la derecha del `content pane`. ¿Cómo puedes sabes si el panel se ha añadido correctamente?
+- [ ] Cambia los *layout hints* de uno de los botones para descubrir cómo afecta a la disposición del botón.
 - [ ] Investiga por qué es necesario usar `invokeLater` (para la siguiente clase).
 
 ### Componentes básicos
@@ -280,3 +297,4 @@ Construir la siguiente ventana para el registro de un usuario:
 
 ![Ventana de registro de usuario.](imagenes/ventana.png)
 
+Debes combinar los layouts vistos BorderLayout, FlowLayout y BoxLayout para conseguir el efecto deseado. 
