@@ -5,7 +5,7 @@ En estás prácticas se cubrirán los contenidos necesarios para desarrollar int
 
 El boletín sirve como un guion para los contenidos que veremos en clase, aunque no abarca todo el material que se discutirá. Además, incluye ejemplos y ejercicios prácticos para probar en el entorno de programación y poder modificarlos. Es recomendable seguir el ritmo de las prácticas, completar los ejercicios propuestos y experimentar por tu cuenta para sacar el máximo provecho de las sesiones.
 
-## Java/Swing básico
+## Java/Swing básico (Sesión 1)
 
 `Java Swing` es una biblioteca gráfica que forma parte de la plataforma Java y se utiliza para crear aplicaciones con interfaces gráficas de usuario (GUI). Swing se encuentra dentro de la biblioteca más amplia conocida como Java Foundation Classes (JFC) y ofrece un conjunto de componentes que permiten diseñar ventanas, botones, menús, cuadros de diálogo, entre otros elementos de una interfaz visual interactiva. A diferencia de su predecesor AWT (Abstract Window Toolkit), Swing es más flexible y robusto, ya que no depende de los recursos nativos del sistema operativo, sino que ofrece una implementación completamente en Java, lo que permite una apariencia y comportamiento consistente en todas las plataformas. De hecho, es posible cambiar el *look & feel* de una aplicación Java e instalar temas propios.
 
@@ -26,7 +26,7 @@ public class HolaMundoSwing {
         // se crea la ventana
         JFrame miFrame = new JFrame("Hola Mundo con Swing");
         // se establecen las dimensiones de la ventana
-        miFrame.setSize(300,300);
+        miFrame.setSize(300, 300);
         // la aplicación finaliza al cerrar la ventana
         miFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // se hace visible la ventana
@@ -89,6 +89,7 @@ public class ContenedoresSwing {
         frame.setLayout(null);  
         // Equivalente a frame.getContentPane().setLayout(null)
 
+
         // Contenedor 1 (JPanel) - Panel principal
         JPanel contenedor1 = new JPanel();
         contenedor1.setBackground(Color.CYAN);
@@ -144,6 +145,7 @@ A continuación se mencionan tres de los layouts más simples:
    - Dispone los componentes en una única fila (horizontal) o columna (vertical).
    - Proporciona más control sobre el espacio entre componentes en comparación con el `FlowLayout`.
    - Respeta los *hints* de layout de los componentes (ver siguiente sección)
+
 
 ### Layout hints de los componentes
 
@@ -219,7 +221,7 @@ Trata de realizar las siguientes tareas sobre el código anterior.
 - [ ] Cambia los *layout hints* de uno de los botones para descubrir cómo afecta a la disposición del botón.
 - [ ] Investiga por qué es necesario usar `invokeLater` (para la siguiente clase).
 
-### Componentes básicos
+### Componentes principales
 
 Los paneles y los layouts sirven para organizar las diferentes zonas de una ventana. Dentro de estas zonas se incluirán componentes (*widgets*) 
 con los que el usuario interactuará.
@@ -298,3 +300,565 @@ Construir la siguiente ventana para el registro de un usuario:
 ![Ventana de registro de usuario.](imagenes/ventana.png)
 
 Debes combinar los layouts vistos BorderLayout, FlowLayout y BoxLayout para conseguir el efecto deseado. 
+
+## Componentes y layouts (Sesión 2)
+
+En esta sesión de describirán los componentes básicos más utilizados (sin entrar en detalle de sus características), algunos componentes más avanzados como otros tipos de paneles y listas de datos. También se presentarán más tipos de layouts.
+
+**Ejercicio**. Se recomienda que a medida que se van describiendo los componentes se vayan probando utilizando WindowBuilder. Para cada nuevo componente, búscalo en WindowBuilder, introducelo en una ventana de prueba y comprueba cómo se comporta y alguna de sus propiedades. También, comprueba el código generado por WindowBuilder.
+
+### Componentes básicos
+
+#### JLabel
+
+Sirve para mostrar un texto o una imagen.
+
+```java
+JLabel lblNombre = new JLabel("Nombre: ");
+lblNombre.setFont(new Font("Tahoma", Font.BOLD, 14));
+```
+
+#### JTextField
+
+Sirve para introducir un texto simple. Típicamente usado en formularios.
+
+```java
+JTextField tfNombre = new JTextField();
+tfNombre.setText("Sin nombre");
+tfNombre.setColumns(20);
+
+// Usar tfNombre.getText() para obtener el texto
+```
+
+#### JTextArea
+
+Es una caja de texto multilínea. Por ejemplo, puede servir para un campo de "Observaciones" en un formulario. No permite formatear el texto (para ello se usa JTextPane o JEditorPane pero son más complicados).
+
+```java
+JTextArea txtrObservaciones = new JTextArea();
+txtrObservaciones.setRows(12);
+txtrObservaciones.setColumns(50);
+txtrObservaciones.setLineWrap(true);      // partir líneas
+txtrObservaciones.setWrapStyleWord(true); // partir por palabras
+```
+
+#### JCheckBox
+
+Muestra un botón que tiene dos estados: seleccionado ( :heavy_check_mark:) o no seleccionado (:black_square_button:).
+
+```java
+JCheckBox esEstudiante = new JCheckBox("¿Es estudiante?");
+// Comprobar con esEstudiante.isSelected()
+```
+
+#### JButton
+
+Explicar cómo poner un icono
+
+
+#### JRadioButton
+
+Es un grupo de botones que tienen la característica de que usuario sólo puede marcar sólo uno a la vez.
+
+Un `JRadioButton` debe formar parte de un `ButtonGroup` para funcionar correctamente. Los `JRadioButton` del mismo grupo son exclusivos.
+
+```java
+ButtonGroup grupo = new ButtonGroup();
+
+JRadioButton pequeño = new JRadioButton("Pequeño",true);
+grupo.add(pequeño);
+
+JRadioButton mediano = new JRadioButton("Mediano",false);
+grupo.add(mediano);
+
+if (grupo.getSelection() == mediano {...}
+
+```
+
+#### JComboBox
+
+Permite seleccionar una opción dentro de una lista desplegable
+
+```java
+// Crear un array con las opciones del combo
+String[] dias = {"lunes", "martes", "miercoles", "jueves", "viernes", "sábado", "domingo"};
+        
+// Crear el combo, pasando el array como parámetro
+JComboBox<String> combo = new JComboBox<String>(dias);
+        
+// Para seleccionar por código una opción, usar setSelectIndex(<posicion>)
+combo.setSelectedIndex(2);
+
+// Añadir el combo al panel donde se quiera mostrar
+JPanel ejemploComboBox = new JPanel(new GridLayout(1,2,10,0));
+ejemploComboBox.add(new JLabel("Selecciona un día"));
+ejemploComboBox.add(combo);
+        
+// Para saber qué entrada está seleccionada, 
+// usar getSelectedItem o getSelectedIndex
+String valorSeleccionado  = (String)combo.getSelectedItem();
+int    indiceSeleccionado = combo.getSelectedIndex();
+```
+
+### Paneles y decoradores
+
+#### Bordes
+
+En Java Swing, los bordes son elementos decorativos que rodean los componentes, como botones, paneles o etiquetas. Un borde se utiliza para resaltar o darle estilo a los componentes visuales. La clase `javax.swing.BorderFactory` se utiliza para crear los bordes. 
+
+Los componentes tienen la propiedad `setBorder` para asignarles un borde. Normalmente, el borde se pondrá en `JPanel`.
+
+Hay muchos tipos de bordes, por simplicidad nos centramos en dos:
+
+- **TitledBorder (Borde con título)**. Este borde tiene un título, lo que es útil para etiquetar una sección de la GUI.
+
+```java
+// Ejemplo de TitledBorder
+JPanel panel = new JPanel();
+panel.setBorder(BorderFactory.createTitledBorder("Datos personales"));
+```
+
+
+- **EmptyBorder (Borde vacío)**. Este tipo de borde no dibuja nada visible, pero deja un espacio alrededor del componente, lo cual es útil para agregar márgenes alrededor de un componente.
+
+```java
+// Ejemplo de EmptyBorder
+// Se crea un espacio vacío de 10 píxeles alrededor del panel.
+JPanel panel = new JPanel();
+panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+```
+
+#### JScrollPane
+
+Un `JScrollPane` proporciona una vista sobre otro componente al que le añade barras de desplazamiento cuando tal componente se hace más grande que el espacio asignado.
+
+Por ejemplo, si se crea una ventana con un area de texto, cuando se llena el área de texto no aparece ninguna barra de desplazamiento. Es es el comportamiento por defecto de la mayoría de los componentes (incluyendo `JList`). 
+
+```java
+JFrame miFrame = new JFrame("Probar JScrollPane");
+miFrame.setSize(200, 200);
+miFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+JTextArea textArea = new JTextArea();
+miFrame.add(textArea, BorderLayout.CENTER);
+
+miFrame.setVisible(true);   
+```
+
+La alternativa es "envolver" el componente afectado (un `JTextArea` en este caso) con un componente de tipo `JScrollBar`. La zona donde se coloca el componente se denomina "viewport view". También es posible asignatura una cabecera ("column header view").
+
+```java
+JFrame miFrame = new JFrame("Probar JScrollPane");
+miFrame.setSize(200, 200);
+miFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+JScrollPane scrollPane = new JScrollPane();
+miFrame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+
+JTextArea textArea = new JTextArea();
+scrollPane.setViewportView(textArea);
+
+JLabel lblNewLabel = new JLabel("Observaciones");
+scrollPane.setColumnHeaderView(lblNewLabel);
+
+miFrame.setVisible(true);  
+```
+
+#### JSplitPane
+
+Este tipo de contenedor permite dividir un área de visualización en dos componentes (paneles), con una barra de división ajustable. Cuando se mueve la barra, los componentes se redimensionan.
+
+La propiedad `setOrientation` indica si la división es horizontal (`JSplitPane.HORIZONTAL_SPLIT`) o vertical (`JSplitPane.VERTICAL_SPLIT`).
+
+```java
+// Crear la ventana (JFrame)
+JFrame frame = new JFrame("Ejemplo de JSplitPane");
+frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+frame.setSize(500, 300);
+
+// Crear dos componentes que estarán en los lados del JSplitPane
+JTextArea textArea = new JTextArea("Área de Texto");
+JLabel label = new JLabel("Etiqueta en el segundo panel");
+
+// Crear el JSplitPane
+JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(textArea), label);
+
+// Configurar la posición inicial de la barra divisoria 
+// en número de pixeles desde la izquierda
+splitPane.setDividerLocation(100); 
+
+// Hacer que la barra divisoria sea expansible con un botón
+splitPane.setOneTouchExpandable(true);
+
+// Añadir el JSplitPane a la ventana
+frame.add(splitPane);
+
+// Hacer visible la ventana
+frame.setVisible(true);
+```
+
+#### JTabbedPane
+
+Es un tipo de contenedor que permite organizar los componentes que contiene como pestañas. Típicamente se utiliza para organizar varias pantallas.
+
+```java
+// Cada uno de los paneles que forman las pestañas
+JPanel pestania1 = new JPanel();
+JPanel pestania2 = new JPanel();
+JPanel pestania3 = new JPanel();
+
+// Creamos un contenedor de tipo JTabbedPane (no JPanel). 
+JTabbedPane pestanias = new JTabbedPane();
+
+// Añadimos los paneles al contenedor con el método addTab(<título>,<panel>)
+pestanias.addTab("Pestaña 1", pestania1);
+pestanias.addTab("Pestaña 2", pestania2);
+// El método addTab también permite asociar un icono y ayuda contextual a la pestaña
+pestanias.addTab("Pestaña 3", new ImageIcon("Image3.gif"), pestania3, "Esta pestaña hace cosas");
+```
+
+### Listas y tablas
+
+#### JList
+
+En Java Swing, el componente `JList` se utiliza para mostrar una lista de elementos que pueden ser seleccionados por el usuario. En un `JList` no se pueden editar los elementos (aunque se pueden añadir y eliminar elementos), pero es muy útil cuando se necesita presentar una lista de opciones de manera simple y clara.
+
+##### JList y el modelo de datos
+
+Uno de los conceptos clave para trabajar con un JList es el modelo de datos. El modelo de datos establece cuáles son los elementos que que se muestran en la lista. La siguiente imagen muestra las clases relacionadas.
+
+![Jerarquía de JList y ListModel.](imagenes/diagrama_jlist.png)
+
+- Interfaz `ListModel`. Representa la fuente de datos subyacente de un JList. Define cómo se accede y gestiona la colección de datos. Además incluye otros métodos (no mostrados) para instalar *oyentes* sobre cambios en la lista.
+
+- Clase `DefaultListModel`. Es una implementación por defecto que permite añadir objetos al modelo con `addElement` y `JList` muestra el valor obtenido invocando a `toString()`.
+
+- Clase abstracta `AbstractListModel`. Es una implementación parcial ya implementa la gestión de los oyentes.
+
+##### Un JList con un modelo de datos por defecto
+
+A continuación se muestra un ejemplo de uso de JList. En este caso se muestran objetos de tipo `Persona`. Es importante observar que tanto `JList<T>` como `DefaultListModel<T>` están parametrizados con el tipo de los objetos que contienen.
+
+
+```java
+package tds.swing.componentes;
+import javax.swing.*;
+import java.awt.*;
+
+public class EjemploJList {
+
+    public static class Persona {
+      private final String nombre;
+      private final String apellidos;
+      public Persona(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+      }
+      
+      @Override
+      public String toString() {
+        return nombre + " " + apellidos;
+      }
+    }
+	
+    public static void main(String[] args) {
+        // Crear un JFrame
+        JFrame frame = new JFrame("Ejemplo de JList con DefaultListModel");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+
+        // Crear un modelo de lista y agregar elementos
+        DefaultListModel<Persona> modelo = new DefaultListModel<>();
+        modelo.addElement(new Persona("Jose", "López"));
+        modelo.addElement(new Persona("Ana", "Jover"));
+        modelo.addElement(new Persona("María", "Sánchez"));
+
+        // Crear el JList basado en el modelo
+        JList<Persona> lista = new JList<>(modelo);
+
+        // Agregar la lista al frame
+        frame.add(new JScrollPane(lista), BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+}
+```
+
+##### JList con un modelo de datos propio
+
+A modeo de ejemplo se muestra una implementación simple de un `ListModel` propio. Una implementación más avanzada podría requerir añadir elementos dinámicamente.
+
+```java
+package tds.swing.componentes;
+import javax.swing.*;
+import java.awt.*;
+
+public class JListExample {
+
+    public static class Persona {
+      private final String nombre;
+      private final String apellidos;
+      public Persona(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+      }
+      
+      @Override
+      public String toString() {
+        return nombre + " " + apellidos;
+      }
+    }
+	
+    public static class PersonasListModel extends AbstractListModel<Persona> {
+
+      private static Persona[] personas = new Persona[] {
+          new Persona("Jose", "López"),
+          new Persona("Ana", "Jover"),
+          new Persona("María", "Sánchez")
+      };
+            
+      @Override
+      public int getSize() {
+        return personas.length;
+      }
+
+      @Override
+      public Persona getElementAt(int index) {
+        return personas[index];
+      }
+      
+    }
+	
+    public static void main(String[] args) {
+        // Crear un JFrame
+        JFrame frame = new JFrame("Ejemplo de JList con DefaultListModel");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+
+        // Crear el JList basado en el modelo
+        JList<Persona> lista = new JList<>(new PersonasListModel());
+
+        // Agregar la lista al frame
+        frame.add(new JScrollPane(lista), BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+}
+```
+
+#### JTable
+
+Este componente muestra una tabla organizada en filas y columnas. Es muy útil para mostrar un conjunto de registros, como una tabla de una base de datos. También es posible editar los datos en la propia tabla.
+
+Al igual que sucedía con `JList`, los datos de un `JTable` son proporcionados por un "modelo". En este caso, la jerarquía de clases correspondiente es la siguiente:
+
+![Jerarquía de JTable y TableModel.](imagenes/jtable.png)
+
+A continuación se muestra un ejemplo de uso:
+
+```java
+package tds.swing.componentes;
+
+import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
+public class JTableExample {
+
+	private JFrame frame;
+	private JTable table;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					JTableExample window = new JTableExample();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public JTableExample() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		ModeloTabla modelo = new ModeloTabla();
+		table = new JTable(modelo);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        table.setFillsViewportHeight(true);
+
+		frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
+	}
+	
+	public static class Alumno {
+		private String nombre;
+		private String apellidos;
+		private int nota;
+		private boolean aprobado;
+		
+		public Alumno(String nombre, String apellidos, int nota, boolean aprobado) {
+			this.nombre = nombre;
+			this.apellidos = apellidos;
+			this.nota = nota;
+			this.aprobado = aprobado;
+		}
+	}
+	
+	private static class ModeloTabla extends AbstractTableModel {
+
+		private static final String[] COLUMNAS = new String[] { "Nombre", "Nota", "Aprobado" };
+		
+		private List<Alumno> alumnos = new ArrayList<>();
+		
+		public ModeloTabla() {
+			alumnos.add(new Alumno("Pepe", "López", 4, true));
+		}
+		
+		@Override
+		public int getRowCount() {
+			return alumnos.size();
+		}
+		
+		@Override
+		public String getColumnName(int column) {
+			return COLUMNAS[column];
+		}
+
+		@Override
+		public int getColumnCount() {
+			return COLUMNAS.length;
+		}
+
+		@Override
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			Alumno alumno = alumnos.get(rowIndex);
+			switch (columnIndex) {
+			case 0: 
+				return alumno.nombre + " " + alumno.apellidos;
+			case 1:
+				return alumno.nota;
+			case 2:
+				return alumno.aprobado;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + columnIndex);
+			}
+		}
+		
+		@Override
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return columnIndex == 2;
+		}
+		
+		@Override
+		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+			Alumno alumno = alumnos.get(rowIndex);
+			if (columnIndex == 2) {
+				alumno.aprobado = (Boolean) aValue;
+				
+				fireTableCellUpdated(rowIndex, columnIndex);
+			}
+		}
+		
+		@Override
+		public Class<?> getColumnClass(int columnIndex) {
+			switch (columnIndex) {
+			case 0: 
+				return String.class;
+			case 1:
+				return Integer.class;
+			case 2:
+				return Boolean.class;
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + columnIndex);
+			}
+		}
+		
+	}
+
+}
+```
+
+#### JTree
+
+Es similar a JTable pero muestra un árbol.
+
+
+### Más tipos de layouts
+
+#### GridLayout
+
+Un `GridLayout` organiza los componentes dentro de un contenedor en una cuadrícula bidimensional, dividida en filas y columnas. Sus características son:
+
+* Distribución uniforme: Todos los componentes tienen el mismo tamaño, sin importar su contenido. 
+
+* Orden de colocación: Los componentes se agregan de arriba hacia abajo y de izquierda a derecha Es decir, que conforme se añaden al contenedor, van apareciendo organizados en la rejilla.
+
+* Redimensión: Si el contenedor cambia de tamaño, los componentes dentro de la cuadrícula se redimensionan para ocupar el espacio disponible.
+  
+#### Componentes de relleno y Box Layout
+
+Para poner espacio entre los componentes de un Box layout se utilizan "fillers". La clase `Box` define la clase anidada `Box.Filler` que es un componente invisible cuyo objetivo es crear un espacio entre otros componentes.
+
+En *WindowBuilder*, los componentes de relleno se encuentran en la pestaña `Struts & Springs`. En particular, utilizaremos estos dos:
+
+- `RigidArea`. Se utiliza para poner un espacio fijo entre dos componentes.
+- `Glue`. Para indicar dónde debe ir el espacio sobrante.
+
+Por ejemplo, la siguiente imagen muestra cómo organizar el espacio entre botones relacionados. Entre `Aceptar` y `Cancelar` se ha puesto un `RigidArea` y luego se utiliza un `Horizontal Glue` para que `Guardar borrador` se pegue a la derecha debido a que el componente glue toma todo el espacio restante.
+
+![Fillers](imagenes/fillers.png)
+
+El código asociado es el siguiente:
+
+```java
+JPanel panel = new JPanel();
+panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+JButton btnAceptar = new JButton("Aceptar");
+panel.add(btnAceptar);
+
+Component rigidArea = Box.createRigidArea(new Dimension(20, 20));
+panel.add(rigidArea);
+
+JButton btnCancelar = new JButton("Cancelar");
+panel.add(btnbtnCancelarNewButton_2);
+
+Component horizontalGlue = Box.createHorizontalGlue();
+panel.add(horizontalGlue);
+
+JButton btnGuardar = new JButton("Guardar borrador");
+panel.add(btnGuardar);
+```
+
+Ver https://docs.oracle.com/javase/tutorial/uiswing/layout/box.html#filler para más información.
+
+#### GridBagLayout
+
+Este layout coloca los componentes en una cuadrícula (*grid*), pero ofrece mucha flexibilidad porque un componente puede ocupar más de una celda. Además ofrece controles sobre el tamaño de los componentes (ej., este componente debe llenar el espacio disponible) y su alineación.
+
+Para controlar cómo se comporta cada componente dentro de la cuadrícula, se utiliza la clase `GridBagConstraints` que incluye propiedades para gestionar cómo se dispone el componente.
+
+Se recomienda utilizar WindowBuilder para utilizar este layout ya que el código generado pronto empieza ser bastante complejo.
