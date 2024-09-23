@@ -89,7 +89,6 @@ public class ContenedoresSwing {
         frame.setLayout(null);  
         // Equivalente a frame.getContentPane().setLayout(null)
 
-
         // Contenedor 1 (JPanel) - Panel principal
         JPanel contenedor1 = new JPanel();
         contenedor1.setBackground(Color.CYAN);
@@ -146,6 +145,19 @@ A continuación se mencionan tres de los layouts más simples:
    - Proporciona más control sobre el espacio entre componentes en comparación con el `FlowLayout`.
    - Respeta los *hints* de layout de los componentes (ver siguiente sección)
 
+### Layout hints de los componentes
+
+En Swing todos los componentes tienen unas propiedades especiales que sirven para dar pistas a los *layout managers* acerca de cómo deben mostrar los componentes. Estas propiedades son *pistas* y no todos los layout managers las respetan, pero es importante probarlas para saber qué layouts respetan qué propiedades y cuál es su efecto.
+
+1. **`preferredSize`**: Define el tamaño recomendado para el componente. Indica al layout manager el tamaño que el componente debería tener bajo condiciones normales.
+
+2. **`minimumSize`**: Establece el tamaño mínimo que el componente debe tener. Es el tamaño más pequeño que el componente puede reducirse.
+
+3. **`maximumSize`**: Define el tamaño máximo que el componente puede tener. Es el tamaño más grande que el componente puede crecer.
+
+4. **`alignment`**: Se refiere a la alineación del componente dentro de su contenedor. Se establece mediante `setAlignmentX(float alignmentX)` y `setAlignmentY(float alignmentY)`. El valor es un float entre 0.0 (izquierda o arriba) y 1.0 (derecha o abajo). El valor de 0.5 indica el centro.
+
+No es trivial determinar qué combinación de valores es adecuada ya que es muy dependiente del *layout manager*. Es recomendable hacer pruebas con el editor de interfaces (WindowBuilder en este caso) y consultar la documentación correspondiente.
 
 ### Layout hints de los componentes
 
@@ -353,7 +365,33 @@ JCheckBox esEstudiante = new JCheckBox("¿Es estudiante?");
 
 #### JButton
 
-Explicar cómo poner un icono
+Es un componente para crear botones interactivos. Estos botones pueden contener texto, imágenes o ambos, y permiten que realizar una acción cuando se pulsan.
+
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.net.URL;
+
+public class BotonEjemplo {
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Botón con Icono usando ClassLoader");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        
+        // Usar el classloader para cargar el icono de un paquete
+        URL url = BotonEjemplo.class.getResource("/tds/icono.png");
+        
+        Icon icono = new ImageIcon(url);  
+        JButton boton = new JButton("Haz clic", icono);
+        
+        frame.getContentPane().add(boton, BorderLayout.CENTER);
+        frame.setVisible(true);
+    }
+}
+
+```
+
 
 
 #### JRadioButton
@@ -374,6 +412,10 @@ grupo.add(mediano);
 if (grupo.getSelection() == mediano {...}
 
 ```
+
+En WindowBuilder para crear varios `JRadioButton` asociados a través de un `ButtonGroup`, o bien se hace en el código creando el
+grupo a mano o bien se seleccionan los tres botones y con el botón derecho se indica que se desea crear el grupo (esta última forma
+parece que da algún problema con WindowBuilder).
 
 #### JComboBox
 
@@ -862,3 +904,5 @@ Este layout coloca los componentes en una cuadrícula (*grid*), pero ofrece much
 Para controlar cómo se comporta cada componente dentro de la cuadrícula, se utiliza la clase `GridBagConstraints` que incluye propiedades para gestionar cómo se dispone el componente.
 
 Se recomienda utilizar WindowBuilder para utilizar este layout ya que el código generado pronto empieza ser bastante complejo.
+
+
