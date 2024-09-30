@@ -18,3 +18,8 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
 
 - **Sesión 3**: Taller de requisitos software
   - [Ejercicios](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%202.%20Requisitos%20y%20Clases%20del%20Dominio/TDS-AppMusic-2023-v1.pdf)
+
+## Caso práctico
+El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
+
+- [Enunciado](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/TDS-AppChat-v1.0.1.pdf)
