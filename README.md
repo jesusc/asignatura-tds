@@ -18,6 +18,7 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
 
 - **Sesión 3**: Taller de requisitos software
   - [Ejercicios](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%202.%20Requisitos%20y%20Clases%20del%20Dominio/TDS-AppMusic-2023-v1.pdf)
+  - [Resumen de historias de usuario identificadas](boletines/historias-usuario.md)
 
 - **Sesión 4**: Taller de modelado de clases
   - [Ejercicios](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%202.%20Requisitos%20y%20Clases%20del%20Dominio/TDS-ModeladoClases-2024.pdf)
