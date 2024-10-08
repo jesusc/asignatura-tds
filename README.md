@@ -22,6 +22,8 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
 
 - **Sesión 4**: Taller de modelado de clases
   - [Ejercicios](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%202.%20Requisitos%20y%20Clases%20del%20Dominio/TDS-ModeladoClases-2024.pdf)
+  - [Herramienta para dibujar diagramas - UMLet](https://umletino.com/)  
+  - [Herramienta para dibujar diagramas - Draw.io](https://draw.io/)
   - [Herramienta UML gráfica - Astah](https://astah.net/downloads/)
   - [Herramienta UML textual - Mermaid](https://mermaid.live). [Documentación](https://mermaid.js.org/syntax/classDiagram.html) 
 
