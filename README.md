@@ -27,7 +27,10 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
   - [Herramienta UML gráfica - Astah](https://astah.net/downloads/)
   - [Herramienta UML textual - Mermaid](https://mermaid.live). [Documentación](https://mermaid.js.org/syntax/classDiagram.html) 
 
-
+- **Sesión 5**: Java/Swing III (JList con _renderers_ y eventos)
+  - [Transparencias de Swing](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%20de%20GUI%20-%20Swing/TDS-Swing-parte-2.pdf)
+  - [Boletín de prácticas](boletines/boletin-swing.md)
+  
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
 

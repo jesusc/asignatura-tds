@@ -686,6 +686,90 @@ public class JListExample {
 }
 ```
 
+#### Mostrar items personalizados con ListCellRenderer
+
+Por defecto, `JList` muestra un elemento de texto por cada item de la lista.
+En ocasiones es deseable mostrar algo visualmente más complejo, como por ejemplo
+una imagen y una etiqueta. Para ello en `JList` está el concepto de `ListCellRenderer`
+que actúa como un "sello" que va invocándose por cada item para determinar
+qué debe pintarse.
+
+Para el JList de personas podemos crear un _renderer_ que muestra una imagen aleatoria 
+junto con el nombre de la persona. Es interesante observar que en lugar de crear 
+un `JPanel` nuevo en cada invocación de `getListCellRendererComponent` el renderer
+herea de `JPanel` para ser el mismo un componente y devolver `return this;` en cada
+invocación.
+
+Esto se hace así porque `JList` garantiza invocar al _renderer_ una vez por cada elemento
+y no reutilizar el componente devuelto.
+
+```java
+package tds.swing.componentes;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
+
+import tds.swing.componentes.JListExampleCustomListModel.Persona;
+
+public class PersonaCellRenderer extends JPanel implements ListCellRenderer<Persona> {
+	private JLabel nameLabel;
+	private JLabel imageLabel;
+
+	public PersonaCellRenderer() {
+		setLayout(new BorderLayout(5, 5));
+
+		nameLabel = new JLabel();
+		imageLabel = new JLabel();
+
+		add(imageLabel, BorderLayout.WEST);
+		add(nameLabel, BorderLayout.CENTER);
+	}
+
+	@Override
+	public Component getListCellRendererComponent(JList<? extends Persona> list, Persona persona, int index,
+			boolean isSelected, boolean cellHasFocus) {
+		// Set the text
+		nameLabel.setText(persona.toString());
+
+		// Load the image from a random URL (for example, using "https://robohash.org")
+		try {
+			URL imageUrl = new URL("https://robohash.org/" + persona.getNombre() + "?size=50x50");
+			Image image = ImageIO.read(imageUrl);
+			ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+			imageLabel.setIcon(imageIcon);
+		} catch (IOException e) {
+			e.printStackTrace();
+			imageLabel.setIcon(null); // Default to no image if there was an issue
+		}
+
+		// Set background and foreground based on selection
+		if (isSelected) {
+			setBackground(list.getSelectionBackground());
+			setForeground(list.getSelectionForeground());
+		} else {
+			setBackground(list.getBackground());
+			setForeground(list.getForeground());
+		}
+
+		return this;
+	}
+}
+```
+
+Cuestiones:
+* El código es algo ineficiente por las llamadas repetidas a través de la red.
+  ¿Qué habría que hacer para hacerlo más eficiente manteniendo la funcionalidad?
+
 #### JTable
 
 Este componente muestra una tabla organizada en filas y columnas. Es muy útil para mostrar un conjunto de registros, como una tabla de una base de datos. También es posible editar los datos en la propia tabla.
@@ -906,3 +990,151 @@ Para controlar cómo se comporta cada componente dentro de la cuadrícula, se ut
 Se recomienda utilizar WindowBuilder para utilizar este layout ya que el código generado pronto empieza ser bastante complejo.
 
 
+## Eventos (Sesión 3)
+
+Los eventos permiten que la interfaz gráfica responda a las acciones del usuario, 
+como los clics de botones, movimientos del ratón o entrada de teclado. 
+Al utilizar un modelo basado en eventos, los componentes de la interfaz pueden 
+escuchar y reaccionar a estas interacciones, haciendo la aplicación interactiva y dinámica. 
+
+El modelo de eventos de Java/Swing está basado en los siguientes conceptos:
+
+* Evento: Objeto que describe un suceso o acontecimiento; por ejemplo una
+pulsación de un JButton genera un objeto ActionEvent.
+
+* Generador o fuente (event source) que produce eventos. Ej: el JButton que
+ha sido pulsado.
+
+* Oyente (event listener): objeto que recibe la notificación de que se ha
+producido el evento (recibe el objeto evento como parámetro)
+
+* Manejador de eventos (event handler): Método del oyente que se ejecuta
+en respuesta al evento.
+
+A continuación se muestra un diagrama de clases que representa este modelo.
+En este caso `ActionListener` es una interfaz para implementar manejadores que 
+gestionan la acciones relativas a la pulsación de un botón, pero hay otras 
+interfaces como `MouseListener`, `ItemListener`, `KeyListener`, `ListSelectionListener`, 
+etc.
+
+![Modelo de delegación de eventos](imagenes/modelo-eventos.png)
+
+El siguiente ejemplo muestra el uso de `ActionLister.actionPerformed` para responder a la 
+pulsación de un botón e incrementar un contador.
+
+
+```java
+package tds.swing.componentes;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class ContadorConEventos {
+
+	private JFrame frame;
+
+	private int contador = 0;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ContadorConEventos window = new ContadorConEventos();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public ContadorConEventos() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel panel = new JPanel();
+		frame.getContentPane().add(panel, BorderLayout.SOUTH);
+		
+		JButton btnIncrementar = new JButton("Incrementar");
+		panel.add(btnIncrementar);
+		
+		JButton btnDecrementar = new JButton("Decrementar");
+		panel.add(btnDecrementar);
+		
+		JPanel panel_1 = new JPanel();
+		frame.getContentPane().add(panel_1, BorderLayout.CENTER);
+		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JLabel lblNewLabel_1 = new JLabel("Contador:");
+		panel_1.add(lblNewLabel_1);
+		
+		JLabel labelContador = new JLabel("0");
+		labelContador.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panel_1.add(labelContador);
+		labelContador.setText(Integer.toString(contador));
+
+		btnIncrementar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contador++;
+				labelContador.setText(Integer.toString(contador));
+			}
+		});
+
+		btnDecrementar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				contador--;
+				labelContador.setText(Integer.toString(contador));
+			}
+		});
+
+	}
+
+}
+
+```
+
+### Formas de manejar un evento
+
+Manejar un evento requiere escribir código que es invocado cuando el evento
+ocurre. A este código se le denomina _callback_. Hay varias formas de hacerlo:
+
+* Expresiones lambda (desde Java 8, antes clases anónimas). 
+Crea el objeto listener que se añade al componente fuente de eventos
+en la clase que crea el componente (muy usual para manejadores
+pequeños).
+
+* Clase interna anidada a la clase que crea el componente (conviene si
+el manejador no tiene pocas líneas o si se reutiliza para varios
+componentes)
+
+* Clase contenedora del componente (JFrame, JPanel o JDialog). Se
+evita crear clases interna o anónima, pero un mismo manejador recibe
+el mismo tipo de evento procedente de diferentes componentes (p.e.,
+un ActionEvent).
+
+* Clase separada de la clase contenedora (menos usual, si es
+compartida por varias clases).
