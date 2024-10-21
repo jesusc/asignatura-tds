@@ -31,6 +31,24 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
   - [Transparencias de Swing](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%20de%20GUI%20-%20Swing/TDS-Swing-parte-2.pdf)
   - [Boletín de prácticas](boletines/boletin-swing.md)
   
+
+- **Sesión 6**: Maven
+  - [Transparencias](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%20Maven/TDS-Maven-Presentacion.pdf)
+  - [Boletin](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%20Maven/TDS-Maven-Guion.pdf)
+  - Instalación de la librería con la ventana de chat
+    - Descargar el fichero jar de [aquí](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/chatWindowLib.jar)
+    - Instalar el jar en el repositorio local de Maven: `mvn install:install-file -Dfile=chatWindowLib.jar -DgroupId=tds -DartifactId=chat-window -Dversion="1.0.0" -Dpackaging=jar -DgeneratePom=true`
+	- Usar la siguiente dependencia en el POM del proyecto:
+	```xml
+		<dependency>
+			<groupId>tds</groupId>
+			<artifactId>chat-window</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	```
+  - [Uso de la librería de chat](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Uso%20de%20una%20librer%C3%ADa%20de%20chat%20en%20Swing.pdf)
+- [Ejemplo completo de Maven](ejemplos/prueba-chat/)
+
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
 
