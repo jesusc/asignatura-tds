@@ -48,6 +48,7 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
 	```
   - [Uso de la librería de chat](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Uso%20de%20una%20librer%C3%ADa%20de%20chat%20en%20Swing.pdf)
 - [Ejemplo completo de Maven](ejemplos/prueba-chat/)
+- Si no funcionan los enlaces, descargarlos de [aquí](av/)
 
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
