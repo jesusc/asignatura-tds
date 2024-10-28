@@ -47,8 +47,21 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
 		</dependency>
 	```
   - [Uso de la librería de chat](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Uso%20de%20una%20librer%C3%ADa%20de%20chat%20en%20Swing.pdf)
-- [Ejemplo completo de Maven](ejemplos/prueba-chat/)
-- Si no funcionan los enlaces, descargarlos de [aquí](av/)
+  - [Ejemplo completo de Maven](ejemplos/prueba-chat/)
+  - Si no funcionan los enlaces, descargarlos de [aquí](av/)
+
+- **Sesión 7**: Git
+  - [Transparencias](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%204%20-%20Git/TDS-Git-Presentacion-2024.pdf)
+  - [Generar clave RSA (Eclipse)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%204%20-%20Git/GitHub-Privado-SSH.pdf)
+  - Generar clave RSA (Linux):
+    ```bash
+    ssh-keygen -o -t rsa -C "tu@email.com"
+    # La clave pública está en /home/tu/.ssh/id_rsa.pub.
+	# Hay que copiarla en GitHub, `Account settings -> SSH Keys`
+    ``` 
+  - [Tutorial y ejemplos de uso en Eclipse](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%202.%20Git/TDS-Git-Gui%C3%B3n.pdf)
+  - [Tutorial detallado de Git (Vogella)](https://www.vogella.com/tutorials/Git/article.html)
+  
 
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
