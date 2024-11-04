@@ -62,6 +62,25 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
   - [Tutorial y ejemplos de uso en Eclipse](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%202.%20Git/TDS-Git-Gui%C3%B3n.pdf)
   - [Tutorial detallado de Git (Vogella)](https://www.vogella.com/tutorials/Git/article.html)
   
+ - **Sesión 8**: Persistencia
+   - [Transparencias (Grupo 1)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%205%20-%20Arquitectura/GuiaCasoPractico-2024-Grupo%201.pdf)
+   - [Transparencias (Grupo 3)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%204.%20Arquitectura%20y%20Servidor%20de%20Persistencia/TDS-GuiaDesarrolloCasoPractico-2022.pdf)
+   - [Ejemplo TiendaTPV (Grupo 1)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%205%20-%20Arquitectura/TiendaTPV.zip)
+   - [Ejemplo TiendaTPV (Grupo 3)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%204.%20Arquitectura%20y%20Servidor%20de%20Persistencia/TiendaTPV.zip)
+   - [Ejemplo login (Grupo 1)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas%20-%20Grupo%201/Pr%C3%A1ctica%205%20-%20Arquitectura/login-2024.zip)
+   - [Ejemplo login (Grupo 3)](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Pr%C3%A1cticas/Pr%C3%A1ctica%204.%20Arquitectura%20y%20Servidor%20de%20Persistencia/login-2022.zip)
+   - Instalación del servicio de persistencia
+     - Descargar la [librería para el driver de persistencia](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Caso%20pr%C3%A1ctico/DriverPersistenciaMaven.zip)
+     - Descomprimirla
+     - Instalar la librería en el repositorio local de Maven
+     
+       ```bash
+          mvn install:install-file -Dfile=DriverPersistencia.jar -DpomFile=driverPersistencia-2.0.pom
+       ```
+     - [Servidor de persistencia](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Caso%20pr%C3%A1ctico/Servicio%20de%20Persistencia/ServidorPersistenciaH2.zip)
+       - Descomprimir
+       - Ejecutar con `java -jar ServidorPersistenciaH2.jar`
+     - [Manual del servicio de persistencia](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Caso%20pr%C3%A1ctico/Servicio%20de%20Persistencia/GuiaServicioPersistencia-2021.pdf)
 
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
