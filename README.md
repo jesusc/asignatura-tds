@@ -82,7 +82,12 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
        - Ejecutar con `java -jar ServidorPersistenciaH2.jar`
      - [Manual del servicio de persistencia](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/Caso%20pr%C3%A1ctico/Servicio%20de%20Persistencia/GuiaServicioPersistencia-2021.pdf)
 
+ - **Sesión 9**: Dudas de AppChat
+ - **Sesión 10**: Repaso de streams y dudas de AppChat
+   - [Boletín de ejercicios](av/Ejercicios-Streams-2.pdf)
+
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
 
 - [Enunciado](https://aulavirtual.um.es/access/content/group/1905_G_2024_N_N/Caso%20pr%C3%A1ctico%20-%20AppChat/TDS-AppChat-v1.0.1.pdf)
+
