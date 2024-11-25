@@ -85,6 +85,10 @@ Tecnologías de Desarrollo de Software (TDS), 3º curso del Grado en Ingeniería
  - **Sesión 9**: Dudas de AppChat
  - **Sesión 10**: Repaso de streams y dudas de AppChat
    - [Boletín de ejercicios](av/Ejercicios-Streams-2.pdf)
+   - [Soluciones](av/Streams-AppMusic-soluciones.pdf)
+ - **Sesión 11**: Repaso de patrones GRASP
+   - [Boletín de ejercicios](av/TDS-Boletin2-GRASP-2024.pdf)
+   
 
 ## Caso práctico
 El caso práctico que debe resolverse consiste en implementar una aplicación de chat con Java/Swing.
